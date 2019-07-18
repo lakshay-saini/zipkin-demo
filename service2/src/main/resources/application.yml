@@ -1,0 +1,46 @@
+spring:
+  kafka:
+    consumer:
+      group-id: backend
+  application:
+    name: service2
+  sleuth:
+    stream:
+      enabled: false
+    sampler:
+      percentage: 0.8
+  zipkin:
+    enabled: true
+    baseUrl: http://localhost:9411
+    locator:
+      discovery:
+        enabled: false
+    service:
+      name: service2
+
+  cloud:
+    stream:
+      default:
+        contentType: application/json
+      bindings:
+        inputchannel:
+          destination: abcd
+          group: consumergroup1
+          consumer.resetOffsets: true
+          consumer.startOffset: latest
+        testchannel:
+          destination: sampletopic
+          group: consumergroup2
+          consumer.resetOffsets: true
+          consumer.startOffset: latest
+
+      kafka:
+        binder:
+          zkNodes: localhost:2181
+            # kafka broker ip
+          brokers: localhost:9092
+
+
+# Server Information
+server:
+  port: 8085
